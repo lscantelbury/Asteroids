@@ -64,3 +64,6 @@ class Spaceship(GameObject):
 
     def accelerate(self):
         self.velocity += self.direction * self.ACCELERATION
+    
+    def slow_down(self):
+        self.velocity -= self.direction * self.ACCELERATION
