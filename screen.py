@@ -70,10 +70,21 @@ class Screen:
     def _process_game_logic(self):
         self.spaceship.move(self.screen)
 
+    def show_lives(self, surface):
+
+        self.surface = surface
+        font = pygame.font.SysFont('times new roman', 30)
+        text = font.render('Lives: ' + str(self.spaceship.lives), False, (255, 0 , 0))
+        text_rect = text.get_rect()
+        text_rect.center = (50, 15)
+        self.surface.blit(text, text_rect)
+        
+
     def draw_hud(self):
         self.screen.blit(self.background, (0, 0))
         self.spaceship.draw(self.screen)
         self.spaceship.move(self.screen)
+        screen.show_lives(self.screen)
 
         for bullet in self.spaceship.bullets:
             bullet.draw()
