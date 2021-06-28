@@ -97,6 +97,8 @@ class Screen:
         new_asteroids = []
 
         for asteroid in self.asteroids:
+            if asteroid.collided_with(self.spaceship.position):
+                quit()
             for bullet in self.spaceship.bullets:
                 if asteroid.collided_with(bullet.position):
                     if res := asteroid.split_asteroid():
