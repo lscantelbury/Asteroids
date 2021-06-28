@@ -10,7 +10,7 @@ class Bullet:
         self.direction = Vector2(direction[0], direction[1])
 
     def draw(self):
-        pygame.draw.circle(self.surface, (255, 255, 255), self.position, 5)
+        pygame.draw.circle(self.surface, (0, 255, 0), self.position, 5)
 
     def move(self):
         self.position = self.position + self.direction.normalize() * 5
