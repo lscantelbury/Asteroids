@@ -18,10 +18,13 @@ class Asteroid:
     def draw_asteroid(self):
         if self.size == LARGE_ASTEROID:
             self.sprite = pygame.transform.scale(self.sprite, LARGE_ASTEROID)
+            self.speed = 0.25
         if self.size == NORMAL_ASTEROID:
             self.sprite = pygame.transform.scale(self.sprite, NORMAL_ASTEROID)
+            self.speed = 1
         if self.size == LITTLE_ASTEROID:
             self.sprite = pygame.transform.scale(self.sprite, LITTLE_ASTEROID)
+            self.speed = 1.5
             
         self.surface.blit(self.sprite, self.position)
 

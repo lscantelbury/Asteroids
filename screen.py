@@ -22,6 +22,10 @@ class Screen:
             Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
                      random.choice(init_dx), random.choice(init_dy), 0.25, False),
             Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
+                     random.choice(init_dx), random.choice(init_dy), 0.25, False),
+            Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
+                     random.choice(init_dx), random.choice(init_dy), 0.25, False),
+            Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
                      random.choice(init_dx), random.choice(init_dy), 0.25, False)
         ]
         'self.ufo = UFO()'
