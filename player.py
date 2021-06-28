@@ -3,6 +3,7 @@ from pygame.transform import rotozoom
 from pygame.image import load
 from bullet import *
 
+
 def load_sprite(name, with_alpha=True):
     path = f"assets/sprites/{name}.png"
     loaded_sprite = load(path)
@@ -29,7 +30,7 @@ class GameObject:
         self.velocity = Vector2(velocity)
 
     def draw(self, surface):
-        self.sprite_rect = self.sprite.get_rect(center = self.position)
+        self.sprite_rect = self.sprite.get_rect(center=self.position)
         blit_position = self.position - Vector2(self.radius)
         surface.blit(self.sprite, self.sprite_rect)
 
@@ -66,13 +67,12 @@ class Spaceship(GameObject):
 
     def accelerate(self):
         self.velocity += self.direction * self.ACCELERATION
-    
+
     def slow_down(self):
         self.velocity -= self.direction * self.ACCELERATION
 
     def shoot(self, surface):
         if len(self.bullets) < 3:
-            print("bullet")
             a = self.bullets.append(
-                Bullet(surface, self.position)
+                Bullet(surface, self.position, self.direction)
             )

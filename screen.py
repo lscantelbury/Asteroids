@@ -67,7 +67,7 @@ class Screen:
 
     def _process_game_logic(self):
         self.spaceship.move(self.screen)
-            
+
     def draw_hud(self):
         self.screen.blit(self.background, (0, 0))
         self.spaceship.draw(self.screen)
@@ -75,7 +75,10 @@ class Screen:
 
         for bullet in self.spaceship.bullets:
             bullet.draw()
-            bullet.move()
+            is_valid_position = bullet.move()
+            print(bullet.position)
+            if not is_valid_position:
+                self.spaceship.bullets.pop()
         for asteroid in self.asteroids:
             asteroid.draw_asteroid()
             asteroid.move_asteroid()
@@ -92,6 +95,7 @@ class Screen:
 
     def collision(self):
         pass
+
 
 if __name__ == "__main__":
     screen = Screen()
