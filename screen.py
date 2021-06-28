@@ -14,6 +14,7 @@ from pygame.constants import *
 
 class Screen:
     def __init__(self):
+        self.score = 0
         self._init_pygame()
         self.width = 800
         self.height = 600
@@ -80,6 +81,12 @@ class Screen:
         text_rect.center = (50, 15)
         self.surface.blit(text, text_rect)
 
+        text = font.render('Points: ' + str(self.score), False, (255, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (70, 50)
+        self.surface.blit(text, text_rect)
+        
+
     def show_waves(self):
         font = pygame.font.SysFont('times new roman', 60)
         text = font.render('Wave ' + str(self.wave), False, (0, 255, 0))
@@ -121,6 +128,7 @@ class Screen:
                 screen.restart()
             for bullet in self.spaceship.bullets:
                 if asteroid.collided_with(bullet.position):
+                    self.score += 100
                     if res := asteroid.split_asteroid():
                         new_asteroids += res
                     self.spaceship.bullets.remove(bullet)

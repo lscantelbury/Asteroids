@@ -49,6 +49,7 @@ class Spaceship(GameObject):
 
     def __init__(self, position, lives):
         # Make a copy of the original UP vector
+        self.score = 0
         self.lives = lives
         self.direction = Vector2(UP)
         self.bullets = []
