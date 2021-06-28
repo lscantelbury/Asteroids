@@ -22,13 +22,13 @@ class Screen:
         self.asteroid_sprite = load(f"assets/sprites/asteroid.png")
         self.asteroids = [
             Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                     random.choice(init_dx), random.choice(init_dy), 0.25, False),
+                     random.choice(init_dx), random.choice(init_dy), 0.25),
             Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                     random.choice(init_dx), random.choice(init_dy), 0.25, False),
+                     random.choice(init_dx), random.choice(init_dy), 0.25),
             Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                     random.choice(init_dx), random.choice(init_dy), 0.25, False),
+                     random.choice(init_dx), random.choice(init_dy), 0.25),
             Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                     random.choice(init_dx), random.choice(init_dy), 0.25, False)
+                     random.choice(init_dx), random.choice(init_dy), 0.25)
         ]
         'self.ufo = UFO()'
         self.spaceship = Spaceship((400, 300))
@@ -79,13 +79,12 @@ class Screen:
             if not is_valid_position:
                 self.spaceship.bullets.remove(bullet)
                 print(len(self.spaceship.bullets))
+
         for asteroid in self.asteroids:
             asteroid.draw_asteroid()
             asteroid.move_asteroid()
-            self.collision()
-            if asteroid.collision == True:
-                asteroid.split_asteroid()
-                self.asteroids.append(asteroid.split_asteroid)
+
+        self.collision()
 
         pygame.display.flip()
         self.clock.tick(60)
@@ -94,7 +93,18 @@ class Screen:
         pass
 
     def collision(self):
-        pass
+        new_asteroids = []
+
+        for asteroid in self.asteroids:
+            for bullet in self.spaceship.bullets:
+                if asteroid.collided_with(bullet.position):
+                    if res := asteroid.split_asteroid():
+                        new_asteroids += res
+                    self.spaceship.bullets.remove(bullet)
+                    self.asteroids.remove(asteroid)
+
+        if new_asteroids:
+            self.asteroids += new_asteroids
 
 
 if __name__ == "__main__":
