@@ -1,7 +1,7 @@
 from pygame.math import Vector2
 from pygame.transform import rotozoom
 from pygame.image import load
-
+from bullet import *
 
 def load_sprite(name, with_alpha=True):
     path = f"assets/sprites/{name}.png"
@@ -48,6 +48,7 @@ class Spaceship(GameObject):
     def __init__(self, position):
         # Make a copy of the original UP vector
         self.direction = Vector2(UP)
+        self.bullets = []
 
         super().__init__(position, load_sprite("spaceship"), Vector2(0))
 
@@ -68,3 +69,10 @@ class Spaceship(GameObject):
     
     def slow_down(self):
         self.velocity -= self.direction * self.ACCELERATION
+
+    def shoot(self, surface):
+        if len(self.bullets) < 3:
+            print("bullet")
+            a = self.bullets.append(
+                Bullet(surface, self.position)
+            )

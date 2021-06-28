@@ -6,6 +6,8 @@ from constants import *
 from asteroid import Asteroid
 from player import Spaceship
 from pygame.constants import *
+
+
 # from ufo import UFO
 
 
@@ -42,6 +44,10 @@ class Screen:
 
     def _handle_input(self):
         for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_z:
+                    self.spaceship.shoot(self.screen)
+
             if event.type == pygame.QUIT or (
                     event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
             ):
@@ -58,7 +64,7 @@ class Screen:
             self.spaceship.accelerate()
         if is_key_pressed[pygame.K_DOWN]:
             self.spaceship.slow_down()
-            
+
     def _process_game_logic(self):
         self.spaceship.move(self.screen)
             
@@ -67,14 +73,16 @@ class Screen:
         self.spaceship.draw(self.screen)
         self.spaceship.move(self.screen)
 
+        for bullet in self.spaceship.bullets:
+            bullet.draw()
+            bullet.move()
         for asteroid in self.asteroids:
             asteroid.draw_asteroid()
             asteroid.move_asteroid()
-            screen.collision()
+            self.collision()
             if asteroid.collision == True:
                 asteroid.split_asteroid()
                 self.asteroids.append(asteroid.split_asteroid)
-        
 
         pygame.display.flip()
         self.clock.tick(60)
@@ -82,6 +90,8 @@ class Screen:
     def draw_elements(self):
         pass
 
+    def collision(self):
+        pass
 
 if __name__ == "__main__":
     screen = Screen()
