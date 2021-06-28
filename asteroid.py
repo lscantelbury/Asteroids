@@ -5,7 +5,7 @@ from pygame.constants import *
 
 
 class Asteroid:
-    def __init__(self, surface, position, sprite, size, dx, dy, speed, collision):
+    def __init__(self, surface, position, sprite, size, dx, dy, speed):
         self.surface = surface
         self.position = list(position)
         self.sprite = pygame.transform.scale(sprite, size)
@@ -13,7 +13,6 @@ class Asteroid:
         self.dx = dx
         self.dy = dy
         self.speed = speed
-        self.collision = collision
 
     def draw_asteroid(self):
 
@@ -70,6 +69,9 @@ class Asteroid:
         random.shuffle(dys)
 
         return [Asteroid(self.surface, self.position, self.sprite, self.size,
-                dxs[0], dys[0], self.speed, self.collision),
+                dxs[0], dys[0], self.speed),
                 Asteroid(self.surface, self.position, self.sprite, self.size,
-                dxs[1], dys[1], self.speed, self.collision)] 
+                dxs[1], dys[1], self.speed)]
+
+    def collided_with(self, point):
+        return self.sprite_rect.collidepoint(point)
