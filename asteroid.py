@@ -16,6 +16,9 @@ class Asteroid:
         self.collision = collision
 
     def draw_asteroid(self):
+
+        self.sprite_rect = self.sprite.get_rect(center = self.position)
+
         if self.size == LARGE_ASTEROID:
             self.sprite = pygame.transform.scale(self.sprite, LARGE_ASTEROID)
             self.speed = 0.25
@@ -26,7 +29,7 @@ class Asteroid:
             self.sprite = pygame.transform.scale(self.sprite, LITTLE_ASTEROID)
             self.speed = 1.5
             
-        self.surface.blit(self.sprite, self.position)
+        self.surface.blit(self.sprite, self.sprite_rect)
 
     def move_asteroid(self):
         if self.dx == 'RIGHT':

@@ -61,7 +61,7 @@ class Screen:
             
     def _process_game_logic(self):
         self.spaceship.move(self.screen)
-
+            
     def draw_hud(self):
         self.screen.blit(self.background, (0, 0))
         self.spaceship.draw(self.screen)
@@ -70,6 +70,7 @@ class Screen:
         for asteroid in self.asteroids:
             asteroid.draw_asteroid()
             asteroid.move_asteroid()
+            screen.collision()
             if asteroid.collision == True:
                 asteroid.split_asteroid()
                 self.asteroids.append(asteroid.split_asteroid)

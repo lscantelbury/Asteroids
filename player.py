@@ -29,8 +29,9 @@ class GameObject:
         self.velocity = Vector2(velocity)
 
     def draw(self, surface):
+        self.sprite_rect = self.sprite.get_rect(center = self.position)
         blit_position = self.position - Vector2(self.radius)
-        surface.blit(self.sprite, blit_position)
+        surface.blit(self.sprite, self.sprite_rect)
 
     def move(self, surface):
         self.position = wrap_position(self.position + self.velocity, surface)
