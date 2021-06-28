@@ -47,8 +47,9 @@ class Spaceship(GameObject):
     MANEUVERABILITY = 3
     ACCELERATION = 0.25
 
-    def __init__(self, position):
+    def __init__(self, position, lives):
         # Make a copy of the original UP vector
+        self.lives = lives
         self.direction = Vector2(UP)
         self.bullets = []
 

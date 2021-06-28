@@ -1,4 +1,5 @@
 import random
+import time
 import pygame
 from pygame.image import load
 
@@ -31,7 +32,7 @@ class Screen:
                      random.choice(init_dx), random.choice(init_dy), 0.25)
         ]
         'self.ufo = UFO()'
-        self.spaceship = Spaceship((400, 300))
+        self.spaceship = Spaceship((400, 300), 3)
 
     def main_loop(self):
         while True:
@@ -90,15 +91,13 @@ class Screen:
         pygame.display.flip()
         self.clock.tick(60)
 
-    def draw_elements(self):
-        pass
-
     def collision(self):
         new_asteroids = []
 
         for asteroid in self.asteroids:
             if asteroid.collided_with(self.spaceship.position):
-                quit()
+                self.spaceship.lives -= 1
+                screen.restart()
             for bullet in self.spaceship.bullets:
                 if asteroid.collided_with(bullet.position):
                     if res := asteroid.split_asteroid():
@@ -108,9 +107,36 @@ class Screen:
 
         if new_asteroids:
             self.asteroids += new_asteroids
-
+        
         if len(self.asteroids) == 0:
+            screen.restart()
+            
+    def restart(self):
+
+        if self.spaceship.lives > 0:
+            self.asteroids = [
+                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
+                            random.choice(init_dx), random.choice(init_dy), 0.25),
+                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
+                            random.choice(init_dx), random.choice(init_dy), 0.25),
+                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
+                            random.choice(init_dx), random.choice(init_dy), 0.25),
+                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
+                            random.choice(init_dx), random.choice(init_dy), 0.25)
+                ]
+            'self.ufo = UFO()'
+            self.spaceship = Spaceship((400, 300), self.spaceship.lives)
+
+        else:
+            font = pygame.font.SysFont('times new roman', 60)
+            text = font.render('Game Over', False, (0, 255, 0))
+            text_rect = text.get_rect()
+            text_rect.center = (400, 300)
+            self.screen.blit(text, text_rect)
+            pygame.display.update()
+            time.sleep(3)
             quit()
+
 
 if __name__ == "__main__":
     screen = Screen()
