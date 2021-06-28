@@ -3,6 +3,6 @@ init_dy = ['UP', 'DOWN']
 position = (600, 300)
 
 # for Asteroid class
-LARGE_ASTEROID = 20
-NORMAL_ASTEROID = 12
-LITTLE_ASTEROID = 8
+LARGE_ASTEROID = (100, 100)
+NORMAL_ASTEROID = (50, 50)
+LITTLE_ASTEROID = (25, 25)

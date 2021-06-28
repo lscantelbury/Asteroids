@@ -16,8 +16,9 @@ class Screen:
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.background = load(f"assets/sprites/space.png")
         self.clock = pygame.time.Clock()
+        self.asteroid_sprite = load(f"assets/sprites/asteroid.png")
         self.asteroids = [
-            Asteroid(self.screen, position, (255, 0, 0), LARGE_ASTEROID,
+            Asteroid(self.screen, position, self.asteroid_sprite, NORMAL_ASTEROID,
                      random.choice(init_dx), random.choice(init_dy), 0.25)
         ]
         'self.ufo = UFO()'
@@ -48,6 +49,7 @@ class Screen:
             self.spaceship.rotate(clockwise=False)
         if is_key_pressed[pygame.K_UP]:
             self.spaceship.accelerate()
+            
 
     def _process_game_logic(self):
         self.spaceship.move(self.screen)
@@ -55,9 +57,13 @@ class Screen:
     def draw_hud(self):
         self.screen.blit(self.background, (0, 0))
         self.spaceship.draw(self.screen)
+        
         for asteroid in self.asteroids:
             asteroid.move_asteroid()
             asteroid.draw_asteroid()
+            asteroid.split_asteroid()
+        
+
         pygame.display.flip()
         self.clock.tick(60)
 
