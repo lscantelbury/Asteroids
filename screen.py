@@ -33,6 +33,7 @@ class Screen:
         ]
         'self.ufo = UFO()'
         self.spaceship = Spaceship((400, 300), 3)
+        self.wave = 1
 
     def main_loop(self):
         while True:
@@ -78,9 +79,18 @@ class Screen:
         text_rect = text.get_rect()
         text_rect.center = (50, 15)
         self.surface.blit(text, text_rect)
-        
+
+    def show_waves(self):
+        font = pygame.font.SysFont('times new roman', 60)
+        text = font.render('Wave ' + str(self.wave), False, (0, 255, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (400, 300)
+        self.screen.blit(text, text_rect)
+        pygame.display.update()
+        time.sleep(3)
 
     def draw_hud(self):
+
         self.screen.blit(self.background, (0, 0))
         self.spaceship.draw(self.screen)
         self.spaceship.move(self.screen)
@@ -120,21 +130,19 @@ class Screen:
             self.asteroids += new_asteroids
         
         if len(self.asteroids) == 0:
+            self.wave += 1
+            screen.show_waves()
             screen.restart()
             
     def restart(self):
 
         if self.spaceship.lives > 0:
-            self.asteroids = [
-                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                            random.choice(init_dx), random.choice(init_dy), 0.25),
-                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                            random.choice(init_dx), random.choice(init_dy), 0.25),
-                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                            random.choice(init_dx), random.choice(init_dy), 0.25),
-                Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
-                            random.choice(init_dx), random.choice(init_dy), 0.25)
-                ]
+            self.asteroids = []
+            for i in range(4 + (self.wave - 1)):
+                self.asteroids.append(Asteroid(self.screen, random.choice(position), self.asteroid_sprite, random.choice(sizes),
+                     random.choice(init_dx), random.choice(init_dy), 0.25))
+            self.asteroids.append(Asteroid(self.screen, random.choice(position), self.asteroid_sprite, LARGE_ASTEROID,
+                     random.choice(init_dx), random.choice(init_dy), 0.25))
             'self.ufo = UFO()'
             self.spaceship = Spaceship((400, 300), self.spaceship.lives)
 
