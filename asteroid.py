@@ -4,14 +4,11 @@ from constants import *
 from pygame.constants import *
 
 
-
-
-
 class Asteroid:
     def __init__(self, surface, position, sprite, size, dx, dy, speed, collision):
         self.surface = surface
         self.position = list(position)
-        self.sprite = sprite
+        self.sprite = pygame.transform.scale(sprite, size)
         self.size = self.sprite.get_size()
         self.dx = dx
         self.dy = dy
@@ -19,7 +16,6 @@ class Asteroid:
         self.collision = collision
 
     def draw_asteroid(self):
-
         if self.size == LARGE_ASTEROID:
             self.sprite = pygame.transform.scale(self.sprite, LARGE_ASTEROID)
         if self.size == NORMAL_ASTEROID:
@@ -52,14 +48,11 @@ class Asteroid:
             self.position[1] = 600
 
     def split_asteroid(self):
-                 
         if self.size == LARGE_ASTEROID:
-            self.sprite = pygame.transform.scale(self.sprite, NORMAL_ASTEROID)
             self.size = NORMAL_ASTEROID
             self.speed += 0.25
             self.collision = False
         elif self.size == NORMAL_ASTEROID:
-            self.sprite = pygame.transform.scale(self.sprite, LITTLE_ASTEROID)
             self.size = LITTLE_ASTEROID
             self.speed += 0.25
             self.collision = False
@@ -69,7 +62,6 @@ class Asteroid:
         dxs, dys = ['LEFT', 'RIGHT'], ['UP', 'DOWN']
         random.shuffle(dxs)
         random.shuffle(dys)
-
 
         return [Asteroid(self.surface, self.position, self.sprite, self.size,
                 dxs[0], dys[0], self.speed, self.collision),
