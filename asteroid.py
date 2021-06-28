@@ -8,7 +8,7 @@ from pygame.constants import *
 
 
 class Asteroid:
-    def __init__(self, surface, position, sprite, size, dx, dy, speed):
+    def __init__(self, surface, position, sprite, size, dx, dy, speed, collision):
         self.surface = surface
         self.position = list(position)
         self.sprite = sprite
@@ -16,10 +16,18 @@ class Asteroid:
         self.dx = dx
         self.dy = dy
         self.speed = speed
+        self.collision = collision
 
     def draw_asteroid(self):
+
+        if self.size == LARGE_ASTEROID:
+            self.sprite = pygame.transform.scale(self.sprite, LARGE_ASTEROID)
+        if self.size == NORMAL_ASTEROID:
+            self.sprite = pygame.transform.scale(self.sprite, NORMAL_ASTEROID)
+        if self.size == LITTLE_ASTEROID:
+            self.sprite = pygame.transform.scale(self.sprite, LITTLE_ASTEROID)
+            
         self.surface.blit(self.sprite, self.position)
-        # pygame.draw.circle(self.surface, self.color, self.position, self.size)
 
     def move_asteroid(self):
         if self.dx == 'RIGHT':
@@ -44,24 +52,19 @@ class Asteroid:
             self.position[1] = 600
 
     def split_asteroid(self):
-
-        self.collision = False
-        
-        for event in pygame.event.get():
-            if event.type == KEYDOWN:
-                if event.key == K_s:
-                    self.collision = True
-        if self.collision == True:           
-            if self.size == LARGE_ASTEROID:
-                self.sprite = pygame.transform.scale(self.sprite, NORMAL_ASTEROID)
-                self.size = NORMAL_ASTEROID
-                self.collision = False
-            elif self.size == NORMAL_ASTEROID:
-                self.sprite = pygame.transform.scale(self.sprite, LITTLE_ASTEROID)
-                self.size = LITTLE_ASTEROID
-                self.collision = False
-            elif self.size == LITTLE_ASTEROID:
-                return None
+                 
+        if self.size == LARGE_ASTEROID:
+            self.sprite = pygame.transform.scale(self.sprite, NORMAL_ASTEROID)
+            self.size = NORMAL_ASTEROID
+            self.speed += 0.25
+            self.collision = False
+        elif self.size == NORMAL_ASTEROID:
+            self.sprite = pygame.transform.scale(self.sprite, LITTLE_ASTEROID)
+            self.size = LITTLE_ASTEROID
+            self.speed += 0.25
+            self.collision = False
+        elif self.size == LITTLE_ASTEROID:
+            return None
 
         dxs, dys = ['LEFT', 'RIGHT'], ['UP', 'DOWN']
         random.shuffle(dxs)
@@ -69,7 +72,6 @@ class Asteroid:
 
 
         return [Asteroid(self.surface, self.position, self.sprite, self.size,
-                dxs[0], dys[0], self.speed),
+                dxs[0], dys[0], self.speed, self.collision),
                 Asteroid(self.surface, self.position, self.sprite, self.size,
-                dxs[1], dys[1], self.speed)]
-
+                dxs[1], dys[1], self.speed, self.collision)] 
