@@ -46,7 +46,7 @@ class Screen:
     def _handle_input(self):
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                if event.key == K_z:
+                if event.key == K_SPACE:
                     self.spaceship.shoot(self.screen)
                  
             if event.type == pygame.QUIT or (
