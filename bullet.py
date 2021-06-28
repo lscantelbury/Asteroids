@@ -24,6 +24,3 @@ class Bullet:
 
         return True
 
-
-    def collidewith(self):
-        pass
