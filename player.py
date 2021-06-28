@@ -74,7 +74,7 @@ class Spaceship(GameObject):
         self.velocity -= self.direction * self.ACCELERATION
 
     def shoot(self, surface):
-        if len(self.bullets) < 3:
+        if len(self.bullets) < 4:
             a = self.bullets.append(
                 Bullet(surface, self.position, self.direction)
             )
