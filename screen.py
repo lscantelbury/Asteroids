@@ -47,7 +47,7 @@ class Screen:
             if event.type == KEYDOWN:
                 if event.key == K_z:
                     self.spaceship.shoot(self.screen)
-
+                 
             if event.type == pygame.QUIT or (
                     event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE
             ):
@@ -64,6 +64,7 @@ class Screen:
             self.spaceship.accelerate()
         if is_key_pressed[pygame.K_DOWN]:
             self.spaceship.slow_down()
+        
 
     def _process_game_logic(self):
         self.spaceship.move(self.screen)
@@ -106,6 +107,8 @@ class Screen:
         if new_asteroids:
             self.asteroids += new_asteroids
 
+        if len(self.asteroids) == 0:
+            quit()
 
 if __name__ == "__main__":
     screen = Screen()
