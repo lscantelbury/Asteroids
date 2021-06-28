@@ -7,6 +7,7 @@ from bullet import *
 def load_sprite(name, with_alpha=True):
     path = f"assets/sprites/{name}.png"
     loaded_sprite = load(path)
+    loaded_sprite = pygame.transform.scale(loaded_sprite, (50,50))
     if with_alpha:
         return loaded_sprite.convert_alpha()
     else:
