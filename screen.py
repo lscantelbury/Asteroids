@@ -108,8 +108,7 @@ class Screen:
             is_valid_position = bullet.move()
             if not is_valid_position:
                 self.spaceship.bullets.remove(bullet)
-                print(len(self.spaceship.bullets))
-
+                
         for asteroid in self.asteroids:
             asteroid.draw_asteroid()
             asteroid.move_asteroid()
